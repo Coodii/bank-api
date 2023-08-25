@@ -1,17 +1,24 @@
 import React from 'react'
 import Header from '../../Components/Header/Header'
 import Footer from '../../Components/Footer/Footer'
-import './user.css';
+import './profile.css';
 import Account from '../../Components/Account/Account';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, selectUser } from '../../Utility/userSlice';
+import axios from 'axios';
 
-function User() {
+
+function Profile() {
+
+  const user = useSelector(selectUser);
+  
   return (
     <div>
         <body>
             <Header/>
             <main class="main bg-dark">
                 <div class="header">
-                    <h1>Welcome back<br />Tony Jarvis!</h1>
+                    <h1>Welcome back<br />{user.firstName} {user.lastName}</h1>
                     <button class="edit-button">Edit Name</button>
                 </div>
                 <h2 class="sr-only">Accounts</h2>
@@ -25,4 +32,4 @@ function User() {
   )
 }
 
-export default User
+export default Profile

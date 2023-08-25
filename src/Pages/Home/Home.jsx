@@ -6,7 +6,7 @@ import iconSecurity from '../../Img/icon-security.png';
 import './home.css';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
-import { login } from '../../Utility/Utility';
+import { login } from '../../Utility/userSlice';
 
 function Home() {
   return (
