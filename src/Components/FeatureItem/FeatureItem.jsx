@@ -3,13 +3,13 @@ import './featureItem.css';
 
 function FeatureItem({img, title, text}) {
   return (
-    <div class="feature-item">
+    <div className="feature-item">
           <img
             src={img}
             alt="featureItemImg"
-            class="feature-icon"
+            className="feature-icon"
           />
-          <h3 class="feature-item-title">{title}</h3>
+          <h3 className="feature-item-title">{title}</h3>
           <p>
             {text}
           </p>
