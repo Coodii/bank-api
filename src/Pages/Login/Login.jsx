@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import Header from '../../Components/Header/Header'
 import Footer from '../../Components/Footer/Footer'
-import User from '../User/Profile';
 import axios from 'axios';
 import './login.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, selectUser } from '../../Utility/userSlice';
+import { useDispatch } from 'react-redux';
+import { login } from '../../Utility/userSlice';
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,9 +12,7 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLogged, setLogin] = useState(false);
     const dispatch = useDispatch();
-    const user = useSelector(selectUser);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) =>{
@@ -44,6 +41,7 @@ function Login() {
         dispatch(
             login({
                 token : token,
+                id: userResponse.id,
                 firstName : userResponse.firstName,
                 lastName : userResponse.lastName
             })
@@ -52,8 +50,6 @@ function Login() {
         })
       .catch(function (error) {
       });
-
-      
     }
         
 return (

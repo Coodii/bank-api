@@ -1,0 +1,35 @@
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height *
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_container{
+    padding: 20px 50px 50px 50px;
+    background-color: #12002b;
+    height: fit-content;
+    width: 30%;
+    position: relative;
+}
+
+.close_modal{
+    position: absolute;
+    right: 3%;
+    background-color: none;
+}
+
+
+.text_color{
+    color: white;
+}
+
+
+

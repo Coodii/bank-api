@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../Components/Header/Header'
 import Footer from '../../Components/Footer/Footer'
 import './profile.css';
 import Account from '../../Components/Account/Account';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, selectUser } from '../../Utility/userSlice';
+import { editName, selectUser } from '../../Utility/userSlice';
 import axios from 'axios';
+import Modal from '../../Components/Modal/Modal';
 
 
 function Profile() {
 
   const user = useSelector(selectUser);
-  
+  const dispatch = useDispatch()
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div>
         <body>
@@ -19,7 +22,7 @@ function Profile() {
             <main class="main bg-dark">
                 <div class="header">
                     <h1>Welcome back<br />{user.firstName} {user.lastName}</h1>
-                    <button class="edit-button">Edit Name</button>
+                    <button class="edit-button" onClick= {() => {setOpenModal(true)}}>Edit Name</button>
                 </div>
                 <h2 class="sr-only">Accounts</h2>
                 <Account title='Argent Bank Checking (x8349)' amount="$2,082.79" description="Available Balance"/>
@@ -28,6 +31,7 @@ function Profile() {
             </main>
             <Footer/>
         </body>
+        {openModal ? <Modal closeModal={setOpenModal}/> : null}
     </div>
   )
 }
