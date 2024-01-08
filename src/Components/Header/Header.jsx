@@ -4,6 +4,8 @@ import logo from '../../Img/argentBankLogo.png'
 import './header.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../Utility/userSlice';
+import { faUserCircle,faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Header() {
   const {connected}= useSelector(selectUser);
@@ -27,10 +29,10 @@ function Header() {
       </NavLink>
       <div>
       {!connected ? <NavLink to="/login" className="main-nav-item">
-          <i className="fa fa-user-circle"></i>
+      <FontAwesomeIcon className='nav_logo' icon={faUserCircle} />
           Sign In
         </NavLink> : <NavLink to="/login" className="main-nav-item" onClick={signOut}>
-          <i className="fa fa-user-circle"></i>
+        <FontAwesomeIcon className='nav_logo' icon={faRightFromBracket} />
           Logout
         </NavLink>}
       </div>

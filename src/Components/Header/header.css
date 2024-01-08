@@ -18,6 +18,10 @@
     text-decoration: none;
     margin-right: 0.5rem;
 }
+
+.nav_logo{
+    padding-right: 10px;
+}
   
 .main-nav-item:hover {
     text-decoration: underline;

@@ -22,7 +22,7 @@ function Profile() {
   }, [connected, navigate])
 
   return (
-    <div className='login'>
+    <div className='current_page'>
         <Header/>
         <main className="main bg-dark">
             <div className="header">

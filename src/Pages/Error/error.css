@@ -1,0 +1,7 @@
+.error_page{
+    height: 75vh;
+    background-color: rgba(223, 218, 218, 0.993);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
