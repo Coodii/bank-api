@@ -6,12 +6,10 @@ import iconSecurity from '../../Img/icon-security.png';
 import './home.css';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
-import { login } from '../../Utility/userSlice';
 
 function Home() {
   return (
     <div>
-      <body>
         <Header/>
           <main>
               <div className="hero">
@@ -31,7 +29,6 @@ function Home() {
               </section>
           </main>
         <Footer/>
-      </body>
     </div>
   )
 }

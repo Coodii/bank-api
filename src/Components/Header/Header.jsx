@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../Utility/userSlice';
 
 function Header() {
-  const user = useSelector(selectUser);
+  const {connected}= useSelector(selectUser);
   const dispatch = useDispatch();
 
   function signOut(){
@@ -26,7 +26,7 @@ function Header() {
         <h1 className="sr-only">Argent Bank</h1>
       </NavLink>
       <div>
-      {!user ? <NavLink to="/login" className="main-nav-item">
+      {!connected ? <NavLink to="/login" className="main-nav-item">
           <i className="fa fa-user-circle"></i>
           Sign In
         </NavLink> : <NavLink to="/login" className="main-nav-item" onClick={signOut}>
