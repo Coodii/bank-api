@@ -31,5 +31,11 @@
     color: white;
 }
 
+@media screen and (max-width: 800px)
+{ 
+    .modal_container{
+        width: 60%;
+    }
+ }
 
 
