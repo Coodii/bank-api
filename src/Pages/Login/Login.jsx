@@ -13,7 +13,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const {tokenReceived, token, connected, error} = useSelector(selectUser);
+    const {tokenReceived, token, connected, loading, error, errorMessage} = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -60,7 +60,8 @@ function Login() {
                             <label htmlFor="remember-me">Remember me</label>
                         </div>
                         <button className="sign-in-button">Sign In</button>
-                        {error ? (<div>Connexion invalide</div>) : null}
+                        {loading ? <p className='loading'>Loading...</p> : null}
+                        {error ? <p className='error'>{errorMessage}</p> : null}
                     </form>
                 </section>
                 

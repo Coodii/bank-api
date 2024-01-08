@@ -2,26 +2,47 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 //Method used to get the token
-export const getToken = createAsyncThunk ('user/getToken', async (user) => {
-  const response = await axios.post('http://localhost:3001/api/v1/user/login', {
+export const getToken = createAsyncThunk ('user/getToken', async (user, thunkAPI) => {
+  try{
+    const response = await axios.post('http://localhost:3001/api/v1/user/login', {
     email: user.email,
     password: user.password
     })
   return response.data.body;
+  }
+  catch (err){
+    if(err?.response){
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+    else{
+      return thunkAPI.rejectWithValue('Server error');
+    }
+  }
 })
 
 //Method used to login
-export const login = createAsyncThunk ('user/login', async (token) => {
-  const response = await axios.post('http://localhost:3001/api/v1/user/profile',null, 
-  {
-      headers: {Authorization: `Bearer` + token} 
-  })
-  return response.data.body;
+export const login = createAsyncThunk ('user/login', async (token, thunkAPI) => {
+  try {
+    const response = await axios.post('http://localhost:3001/api/v1/user/profile',null, 
+    {
+        headers: {Authorization: `Bearer` + token} 
+    })
+    return response.data.body;
+  }
+  catch (err){
+    if(err?.response){
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+    else{
+      return thunkAPI.rejectWithValue('Server error');
+    }
+  }
 })
 
 //Method used to change user information
-export const editProfil = createAsyncThunk ('user/editProfil', async ({firstName, lastName, token}) => {
-  const response = await axios.put('http://localhost:3001/api/v1/user/profile',{
+export const editProfil = createAsyncThunk ('user/editProfil', async ({firstName, lastName, token}, thunkAPI) => {
+  try {
+    const response = await axios.put('http://localhost:3001/api/v1/user/profile',{
     firstName: firstName,
     lastName: lastName
     }, 
@@ -29,6 +50,15 @@ export const editProfil = createAsyncThunk ('user/editProfil', async ({firstName
     headers: {Authorization: `Bearer` + token} 
     })
     return response.data.body;
+  }
+  catch (err){
+    if(err?.response){
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+    else{
+      return thunkAPI.rejectWithValue('Server error');
+    }
+  }
 })
 
 //Slice to manage the state of the user
@@ -41,7 +71,8 @@ export const userSlice = createSlice({
     lastName : null,
     connected : false,
     loading : false,
-    error : false
+    error : false,
+    errorMessage : null
   },
   reducers : {
     logout : (state) => {
@@ -51,6 +82,7 @@ export const userSlice = createSlice({
       state.connected = false
       state.loading = false
       state.error = false
+      state.errorMessage = null;
       state.tokenReceived = false;
     }
   },
@@ -61,13 +93,17 @@ export const userSlice = createSlice({
       state.token = action.payload.token; 
       state.error = false;
       state.tokenReceived = true;
+      state.errorMessage = null;
     })
     builder.addCase(getToken.pending, (state) => {
       state.loading = true;
+      state.error = false;
+      state.errorMessage = null;
     })
-    builder.addCase(getToken.rejected, (state) => {
-      state.login = false;
+    builder.addCase(getToken.rejected, (state, action) => {
+      state.loading = false;
       state.error = true;
+      state.errorMessage = action.payload;
     })
 
     //Login method
@@ -75,10 +111,12 @@ export const userSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.connected = true;
-      state.login = false;
+      state.errorMessage = null;
+      state.loading = false
     })
-    builder.addCase(login.rejected, (state) => {
-      state.login = false;
+    builder.addCase(login.rejected, (state, action) => {
+      state.error = true;
+      state.errorMessage = action.payload;
     })
 
     //Edit name method

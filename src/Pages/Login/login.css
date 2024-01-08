@@ -46,3 +46,11 @@
     padding: 5px;
     font-size: 1.2rem;
 }
+
+.error{
+    color : red;
+}
+
+.loading{
+    color: #00bc77;
+}
