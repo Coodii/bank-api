@@ -1,9 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const initState = {
+    token : null,
+    firstName : null,
+    lastName : null,
+    connected : false,
+    loading : false,
+    error : false,
+    errorMessage : null
+}
+
+export const getEmail = () => {return localStorage.getItem("email")};
+
 //Method used to get the token
 export const getToken = createAsyncThunk ('user/getToken', async (user, thunkAPI) => {
   try{
+    if(user.rememberMe){
+        localStorage.setItem("email", user.email);
+    }
+    else{
+        localStorage.removeItem("email");
+    }
     const response = await axios.post('http://localhost:3001/api/v1/user/login', {
     email: user.email,
     password: user.password
@@ -64,16 +82,7 @@ export const editProfil = createAsyncThunk ('user/editProfil', async ({firstName
 //Slice to manage the state of the user
 export const userSlice = createSlice({
   name:'user',
-  initialState:{
-    token : null,
-    tokenReceived : false,
-    firstName : null,
-    lastName : null,
-    connected : false,
-    loading : false,
-    error : false,
-    errorMessage : null
-  },
+  initialState: initState,
   reducers : {
     logout : (state) => {
       state.token = null
@@ -92,7 +101,6 @@ export const userSlice = createSlice({
     builder.addCase(getToken.fulfilled, (state, action) => {
       state.token = action.payload.token; 
       state.error = false;
-      state.tokenReceived = true;
       state.errorMessage = null;
     })
     builder.addCase(getToken.pending, (state) => {

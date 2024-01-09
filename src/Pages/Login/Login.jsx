@@ -3,7 +3,7 @@ import Header from '../../Components/Header/Header'
 import Footer from '../../Components/Footer/Footer'
 import './login.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getToken, login, selectUser } from '../../Utility/userSlice';
+import { getEmail, getToken, login, selectUser } from '../../Utility/userSlice';
 import { useNavigate } from "react-router-dom";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,30 +12,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Login() {
 
-    const [username, setUsername] = useState(localStorage?.getItem("email"));
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const {tokenReceived, token, connected, loading, error, errorMessage} = useSelector(selectUser);
+    const {token, connected, loading, error, errorMessage} = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        dispatch(getToken({email : username, password: password}))
-        if(rememberMe){
-            localStorage.setItem("email", username);
-        }
-        else{
-            localStorage.removeItem("email");
-        }
+        dispatch(getToken({email : username, password: password, rememberMe: rememberMe}))
     }
+
+
+    //Get email if store
+    useEffect(() => {
+        const email = getEmail();
+        if(email != null){
+            setUsername(email);
+        }
+    },[])
 
     //When token is received, start login
     useEffect(() => {
-        if (tokenReceived) {
+        if (token != null) {
           dispatch(login(token))
         }
-      }, [dispatch, token, tokenReceived])
+      }, [dispatch, token])
 
 
     //When connexion is etablished, navigate to the profile
