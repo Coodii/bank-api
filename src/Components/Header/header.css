@@ -13,6 +13,11 @@
 .main-nav a.router-link-exact-active {
     color: #42b983;
 }
+
+.connected{
+    display: flex;
+    flex-direction: row;
+}
   
 .main-nav-item {
     text-decoration: none;
@@ -20,7 +25,7 @@
 }
 
 .nav_logo{
-    padding-right: 10px;
+    padding-right: 5px;
 }
   
 .main-nav-item:hover {

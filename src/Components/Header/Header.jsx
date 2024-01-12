@@ -8,7 +8,7 @@ import { faUserCircle,faRightFromBracket } from "@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Header() {
-  const {connected}= useSelector(selectUser);
+  const {connected, firstName}= useSelector(selectUser);
   const dispatch = useDispatch();
 
   function signOut(){
@@ -31,10 +31,17 @@ function Header() {
       {!connected ? <NavLink to="/login" className="main-nav-item">
       <FontAwesomeIcon className='nav_logo' icon={faUserCircle} />
           Sign In
-        </NavLink> : <NavLink to="/login" className="main-nav-item" onClick={signOut}>
-        <FontAwesomeIcon className='nav_logo' icon={faRightFromBracket} />
-          Logout
-        </NavLink>}
+        </NavLink> :
+        <div className='connected'>
+          <NavLink to="/profile" className="main-nav-item connected"> 
+            <FontAwesomeIcon className='nav_logo' icon={faUserCircle} />
+            {firstName}
+          </NavLink>
+          <NavLink to="/login" className="main-nav-item" onClick={signOut}>
+            <FontAwesomeIcon className='nav_logo' icon={faRightFromBracket} />
+            Logout
+          </NavLink>
+        </div>}
       </div>
     </nav>
   )
